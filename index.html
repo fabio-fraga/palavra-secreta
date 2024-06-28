@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palavra secreta</title>
+</head>
+<body>
+  <table id="palavra"></table>
+  <p id="dica"></p>
+
+  <table id="teclado"></table>
+
+  <script>
+    const teclado = [
+      ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+      ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+      ["Z", "X", "C", "V", "B", "N", "M"]
+    ];
+
+    const tabelaTeclado = document.getElementById("teclado")
+
+    for (let i = 0; i < teclado.length; i++) {
+      const linha = document.createElement("tr")
+      linha.className = "linha"
+
+      for (let j = 0; j < teclado[i].length; j++) {
+        const coluna = document.createElement("td")
+
+        coluna.innerHTML = teclado[i][j]
+        coluna.className = "coluna"
+
+        linha.appendChild(coluna)
+      }
+
+      tabelaTeclado.appendChild(linha)
+    }
+
+    const palavras = [
+      {
+        valor: "CELULAR",
+        dica: "ELETRÔNICO"
+      },
+      {
+        valor: "CACATUA",
+        dica: "AVE"
+      },
+      {
+        valor: "BALEIA",
+        dica: "MAMÍFERO"
+      }
+    ];
+
+    sortearPalavra()
+
+    function sortearPalavra() {
+      const indice = Math.floor(Math.random() * palavras.length);
+
+      const palavraSorteada = palavras[indice]
+
+      const palavraOculta = []
+
+      for (let i = 0; i < palavraSorteada.valor.length; i++) {
+        palavraOculta.push("")
+      }
+
+      const chances = 5
+
+      const tabelaPalavra = document.getElementById("palavra")
+
+      for (let i = 0; i < chances; i++) {
+        const linha = document.createElement("tr")
+
+        for (let j = 0; j < palavraOculta.length; j++) {
+          const coluna = document.createElement("td")
+
+          coluna.innerHTML = palavraOculta[j]
+          coluna.style.backgroundColor = "gray"
+          coluna.style.width = "10px"
+          coluna.style.height = "10px"
+
+          linha.appendChild(coluna)
+        }
+
+        tabelaPalavra.appendChild(linha)
+      }
+
+      const dica = document.getElementById("dica")
+
+      dica.innerHTML = palavraSorteada.dica
+    }
+  </script>
+</body>
+</html>
