@@ -12,13 +12,14 @@
   <table id="teclado"></table>
 
   <script>
+    const tabelaPalavra = document.getElementById("palavra")
+    const tabelaTeclado = document.getElementById("teclado")
+
     const teclado = [
-      ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+      ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "&#9003;"],
       ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
       ["Z", "X", "C", "V", "B", "N", "M"]
     ];
-
-    const tabelaTeclado = document.getElementById("teclado")
 
     for (let i = 0; i < teclado.length; i++) {
       const linha = document.createElement("tr")
@@ -29,6 +30,16 @@
 
         coluna.innerHTML = teclado[i][j]
         coluna.className = "coluna"
+        coluna.style.backgroundColor = "gray"
+        coluna.style.cursor = "pointer"
+        coluna.style.textAlign = "center"
+        coluna.style.width = "10px"
+        
+        if (j == 10) {
+          coluna.onclick = () => removerletra()
+        } else {
+          coluna.onclick = () => adicionarletra(teclado[i][j])
+        }
 
         linha.appendChild(coluna)
       }
@@ -50,32 +61,23 @@
         dica: "MAMÍFERO"
       }
     ];
+    
+    const indice = Math.floor(Math.random() * palavras.length);
+    const palavraSorteada = palavras[indice]
 
-    sortearPalavra()
+    let chanceAtual = 0
+    
+    sortearPalavra(palavraSorteada, 3)
 
-    function sortearPalavra() {
-      const indice = Math.floor(Math.random() * palavras.length);
-
-      const palavraSorteada = palavras[indice]
-
-      const palavraOculta = []
-
-      for (let i = 0; i < palavraSorteada.valor.length; i++) {
-        palavraOculta.push("")
-      }
-
-      const chances = 5
-
-      const tabelaPalavra = document.getElementById("palavra")
-
+    function sortearPalavra(palavraSorteada, chances) {
       for (let i = 0; i < chances; i++) {
         const linha = document.createElement("tr")
 
-        for (let j = 0; j < palavraOculta.length; j++) {
+        for (let j = 0; j < palavraSorteada.valor.length; j++) {
           const coluna = document.createElement("td")
 
-          coluna.innerHTML = palavraOculta[j]
-          coluna.style.backgroundColor = "gray"
+          coluna.innerHTML = ""
+          coluna.style.border = "1px solid black"
           coluna.style.width = "10px"
           coluna.style.height = "10px"
 
@@ -88,6 +90,55 @@
       const dica = document.getElementById("dica")
 
       dica.innerHTML = palavraSorteada.dica
+    }
+
+    function adicionarletra(letra) {
+      const linhas = tabelaPalavra.children
+      const linhaAtual = linhas[chanceAtual]
+      const elementos = linhaAtual.children
+
+      let colunasPreenchidas = 0
+
+      for (let i = 0; i < elementos.length; i++) {
+        if (elementos[i].innerHTML === "") {
+          elementos[i].innerHTML = letra
+          break
+        }
+
+        colunasPreenchidas++
+      }
+
+      let acertos = 0
+
+      if (colunasPreenchidas == elementos.length - 1) {
+        for (let i = 0; i < elementos.length; i++) {
+          if (palavraSorteada.valor.includes(elementos[i].innerHTML)) {
+            if (palavraSorteada.valor[i] == elementos[i].innerHTML) {
+              elementos[i].style.backgroundColor = 'lightgreen'
+
+              acertos++
+            } else {
+              elementos[i].style.backgroundColor = 'yellow'
+            }
+          } else {
+            elementos[i].style.backgroundColor = 'gray'
+          }
+        }
+
+        if (palavraSorteada.valor.length == acertos) {
+          console.log('Você venceu!')
+        }
+      }
+    }
+
+    function removerletra(letra) {
+      const linhas = tabelaPalavra.children
+      const linhaAtual = linhas[chanceAtual]
+      const elementos = linhaAtual.children
+
+      const elementosPreenchidos = Array.from(elementos).filter((el) => el.innerHTML !== "")
+
+      elementosPreenchidos.at(-1).innerHTML = ""
     }
   </script>
 </body>
