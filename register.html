@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro</title>
+</head>
+<body>
+  <div>
+    <form id="register">
+      <input type="text" placeholder="fabin" required>
+      <input type="email" placeholder="sergin@email.com" required>
+      <input type="password" placeholder="********" minlength="8" maxlength="16" required>
+      <input type="submit" value="Enviar">
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("register")
+
+    form.onsubmit = (event) => {
+      event.preventDefault()
+
+      const name = form.children[0].value
+      const email = form.children[1].value
+      const password = form.children[2].value
+
+      const userObj = {
+        name,
+        email,
+        password
+      }
+
+      let users = JSON.parse(localStorage.getItem('users'))
+
+      if (!users) {
+        localStorage.setItem('users', JSON.stringify([]))
+        users = []
+      }
+
+      users.push(userObj)
+
+      localStorage.setItem('users', JSON.stringify(users))
+
+      form.reset()
+    }
+  </script>
+</body>
+</html>
