@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro</title>
-</head>
-<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <body>
   <div>
     <form id="register">
       <input type="text" placeholder="fabin" required>
@@ -28,7 +28,7 @@
       const userObj = {
         name,
         email,
-        password
+        password: CryptoJS.SHA256(password).toString()
       }
 
       let users = JSON.parse(localStorage.getItem('users'))

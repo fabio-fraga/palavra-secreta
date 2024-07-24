@@ -4,14 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Palavra secreta</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js" integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
+  <p id="contador"></p>
+
   <table id="palavra"></table>
   <p id="dica"></p>
+
+  <p id="perdeu-boy"></p>
 
   <table id="teclado"></table>
 
   <script>
+    regressiveCount(5);
+
+    const hash = window.crypto.randomUUID().replaceAll("-", "")
+    
     const tabelaPalavra = document.getElementById("palavra")
     const tabelaTeclado = document.getElementById("teclado")
 
@@ -139,6 +148,28 @@
       const elementosPreenchidos = Array.from(elementos).filter((el) => el.innerHTML !== "")
 
       elementosPreenchidos.at(-1).innerHTML = ""
+    }
+
+    function regressiveCount(count) {
+      if (count < 0) {
+        const perdeuBoy = document.getElementById('perdeu-boy')
+
+        perdeuBoy.innerHTML = "Você perdeu!"
+        perdeuBoy.style.color = 'red'
+
+        return
+      }
+
+      const contador = document.getElementById('contador')
+      contador.innerHTML = count
+
+      setTimeout(() => {
+        console.log(count);
+
+        count--;
+
+        regressiveCount(count);
+      }, 1000);
     }
   </script>
 </body>

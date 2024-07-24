@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+  <div>
+    <form onsubmit="handleSubmit(event)">
+      <input type="email" name="email" placeholder="sergin@email.com" required>
+      <input type="password" name="password" placeholder="********" minlength="8" maxlength="16" required>
+      <input type="submit" value="Enviar">
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault()
+
+      const form = new FormData(event.target)
+
+      const email = form.get('email')
+      const password = CryptoJS.SHA256(form.get('password')).toString()
+
+      const users = JSON.parse(localStorage.getItem('users'))
+
+      let userFound = null
+
+      for (const user of users) {
+        if (user.email === email) {
+          userFound = user;
+          break;
+        }
+      }
+
+      if (!userFound) {
+        document.getElementById('result').innerText = 'Email não cadastrado'
+        return
+      }
+
+      if (userFound.password !== password) {
+        document.getElementById('result').innerText = 'Senha incorreta'
+        return
+      }
+    }
+  </script>
+</body>
+</html>
