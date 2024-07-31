@@ -1,0 +1,52 @@
+const tabela = document.createElement('table')
+
+document.getElementById('ranking').appendChild(tabela)
+
+const linhaTitulos = document.createElement('thead')
+
+const posicao = document.createElement('th')
+posicao.innerHTML = '#'
+
+const nome = document.createElement('th')
+nome.innerHTML = 'Nome'
+
+const pontuacao = document.createElement('th')
+pontuacao.innerHTML = 'Pontuação'
+
+linhaTitulos.append(posicao, nome, pontuacao)
+
+tabela.appendChild(linhaTitulos)
+
+const jogadores = [
+    {
+        nome: 'Rhaudney',
+        pontuacao: 130
+    },
+    {
+        nome: 'Fábio',
+        pontuacao: 150
+    },
+    {
+        nome: 'Sérgio',
+        pontuacao: 120
+    },
+]
+
+jogadores.sort((a, b) => b.pontuacao - a.pontuacao)
+
+for (let i = 0; i < jogadores.length; i++) {
+    const linha = document.createElement('tr')
+
+    const posicao = document.createElement('td')
+    posicao.innerHTML = i + 1
+
+    const nome = document.createElement('td')
+    nome.innerHTML = jogadores[i].nome
+
+    const pontuacao = document.createElement('td')
+    pontuacao.innerHTML = jogadores[i].pontuacao
+
+    linha.append(posicao, nome, pontuacao)
+
+    tabela.appendChild(linha)
+}
