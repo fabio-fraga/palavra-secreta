@@ -57,3 +57,5 @@ for (let i = 0; i < jogadores.length; i++) {
 
     tabela.appendChild(linha)
 }
+
+window.sharedStorage.set('teste', 'teste')
