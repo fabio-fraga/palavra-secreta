@@ -24,7 +24,7 @@ const jogadores = [
     },
     {
         nome: 'Fábio',
-        pontuacao: 150
+        pontuacao: 120
     },
     {
         nome: 'Sérgio',
@@ -34,11 +34,18 @@ const jogadores = [
 
 jogadores.sort((a, b) => b.pontuacao - a.pontuacao)
 
+let ultimaPosicao = 0
+
 for (let i = 0; i < jogadores.length; i++) {
     const linha = document.createElement('tr')
 
     const posicao = document.createElement('td')
-    posicao.innerHTML = i + 1
+
+    if (jogadores[i - 1]?.pontuacao != jogadores[i].pontuacao) {
+        ultimaPosicao++
+    }
+
+    posicao.innerHTML = ultimaPosicao
 
     const nome = document.createElement('td')
     nome.innerHTML = jogadores[i].nome
