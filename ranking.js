@@ -61,7 +61,7 @@ for (let i = 0; i < jogadores.length; i++) {
 if ('SharedStorage' in window) {
     console.log('entrou')
     // Obtém a instância do SharedStorage
-    const sharedStorage = window.sharedStorage;
+    const sharedStorage = window.SharedStorage;
 
     // Armazenar dados
     sharedStorage.setItem('key', 'value');
