@@ -59,6 +59,7 @@ for (let i = 0; i < jogadores.length; i++) {
 }
 
 if ('SharedStorage' in window) {
+    console.log('entrou')
     // Obtém a instância do SharedStorage
     const sharedStorage = window.sharedStorage;
 
