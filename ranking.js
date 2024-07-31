@@ -58,4 +58,19 @@ for (let i = 0; i < jogadores.length; i++) {
     tabela.appendChild(linha)
 }
 
-window.sharedStorage.set('teste', 'teste')
+if ('SharedStorage' in window) {
+    // Obtém a instância do SharedStorage
+    const sharedStorage = window.sharedStorage;
+
+    // Armazenar dados
+    sharedStorage.setItem('key', 'value');
+
+    // Recuperar dados
+    const value = sharedStorage.getItem('key');
+    console.log(value); // 'value'
+
+    // Remover dados
+    // sharedStorage.removeItem('key');
+} else {
+    console.log('SharedStorage não está disponível neste navegador.');
+}
